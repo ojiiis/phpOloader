@@ -7,6 +7,22 @@ class App {
     private $input = [];
     
     public function __construct(callable $useInput = null) {
+       $htaccess = __DIR__ . '/.htaccess';
+
+if (!file_exists($htaccess)) {
+    file_put_contents($htaccess, <<<HTACCESS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+HTACCESS
+    );
+}
+        
+        
+        
         $this->response = [
             "status" => 0,
             "message" => "Wrong path.",
