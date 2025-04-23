@@ -42,23 +42,23 @@ HTACCESS
         }
     }
 
-    private function setStatus($value) {
+    public function setStatus($value) {
         $this->response["status"] = $value;
     }
 
-    private function setMessage($value) {
+    public function setMessage($value) {
         $this->response["message"] = $value;
     }
 
-    private function setErrors($value) {
+    public function setErrors($value) {
         $this->response["errors"] = $value;
     }
 
-    private function setData($value) {
+    public function setData($value) {
         $this->response["data"] = $value;
     }
 
-    private function getResponse() {
+    public function getResponse() {
         return $this->response;
     }
 }
