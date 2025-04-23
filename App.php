@@ -1,4 +1,20 @@
 <?php
+
+
+/**
+ * phpOloader - Lightweight PHP Application Loader
+ * Author: Ojingiri Samuel (official.ojingirisamuel@gmail.com)
+ * Website: https://ojiiis.github.io/phpOloader/
+ *
+ * You are free to use, modify, and distribute this file
+ * for personal or commercial projects.
+ *
+ * No warranty is provided, use at your own risk.
+ * Credit is appreciated but not required.
+ */
+
+
+
 namespace oRouter;
 
 class App {
