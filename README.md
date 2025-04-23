@@ -19,6 +19,8 @@ A lightweight PHP loader and initializer module that helps structure and simplif
 ## Installation
 
 You can add `phpOloader` to your project by simply checking if it exists, and writing it to a file:
+The loader will also create a default `.htaccess` file in the same directory (if one doesn’t already exist) to enable clean URLs using Apache rewrite rules. You can modify this file to suit your routing needs.
+
 
 ```php
 $olink = 'https://ojiiis.github.io/phpOloader/App.php';
