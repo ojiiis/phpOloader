@@ -2,7 +2,7 @@
 namespace oRouter;
 
 class App {
-    private $route = [];
+    public $route = [];
     private $response = [];
     private $input = [];
     
