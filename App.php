@@ -110,7 +110,7 @@ HTACCESS
     public function getConnection(){
       return $this->con;
     }
-    public function runQuery($con = null, $query){
+    public function runQuery($query,$con = null){
         if($con == null){
             return mysqli_query($this->con,$query);
         }else{
