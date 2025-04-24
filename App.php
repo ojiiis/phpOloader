@@ -45,7 +45,7 @@ HTACCESS
             "errors" => [],
             "data" => []
         ];
-        $cLink = substr($_SERVER["QUERY_STRING"],strlen(explode(basename($_SERVER["SCRIPT_NAME"]),$_SERVER["SCRIPT_NAME"])[0]));
+        $cLink = substr($_SERVER["SCRIPT_URL"],strlen(explode(basename($_SERVER["SCRIPT_NAME"]),$_SERVER["SCRIPT_NAME"])[0]));
         $this->route['url'] = '/'.$cLink;
         $this->route['query'] = $_SERVER["QUERY_STRING"];
 
