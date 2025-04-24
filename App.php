@@ -46,9 +46,8 @@ HTACCESS
             "data" => []
         ];
 
-        $parse = explode('?', $_SERVER['REQUEST_URI']);
-        $this->route['url'] = $parse[0];
-        $this->route['query'] = (count($parse) > 1) ? $parse[1] : '';
+        $this->route['url'] = (substr($_SERVER["QUERY_STRING"],strlen(explode(basename($_SERVER["SCRIPT_NAME"]),$_SERVER["SCRIPT_NAME"])[0])))?substr($_SERVER["QUERY_STRING"],strlen(explode(basename($_SERVER["SCRIPT_NAME"]),$_SERVER["SCRIPT_NAME"])[0])):'/';
+        $this->route['query'] = $_SERVER["QUERY_STRING"];
 
         $_DATA = json_decode(file_get_contents("php://input"), true);
         if (is_array($_DATA) && count($_DATA) > 0) {
