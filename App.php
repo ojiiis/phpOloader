@@ -20,9 +20,9 @@ namespace oRouter;
 class App {
     public $route = [];
     private $response = [];
-    private $input = [];
-    
-    public function __construct(callable $useInput = null) {
+    public $input = [];
+    private $con = null;
+    public function __construct(callable $useInput = null,$con = []) {
        $htaccess = __DIR__ . '/.htaccess';
 
 if (!file_exists($htaccess)) {
@@ -37,7 +37,13 @@ HTACCESS
     );
 }
         
-        
+        if (isset($con["host"], $con["username"], $con["password"], $con["database"])){
+           try{
+             $this->con = mysqli_connect($con["host"],$con["username"],$con["password"],$con["database"]);
+           }catch(\Exception $e){
+               throw $e;
+           } 
+        }
         
         $this->response = [
             "status" => 0,
@@ -45,7 +51,7 @@ HTACCESS
             "errors" => [],
             "data" => []
         ];
-        $cLink = substr($_SERVER["SCRIPT_URL"],strlen(explode(basename($_SERVER["SCRIPT_NAME"]),$_SERVER["SCRIPT_NAME"])[0]));
+        $cLink = substr($_SERVER["REQUEST_URI"],strlen(explode(basename($_SERVER["SCRIPT_NAME"]),$_SERVER["SCRIPT_NAME"])[0]));
         $this->route['url'] = '/'.$cLink;
         $this->route['query'] = $_SERVER["QUERY_STRING"];
 
@@ -75,6 +81,13 @@ HTACCESS
 
     public function getResponse() {
         return $this->response;
+    }
+    public function runQuery($con = null, $query){
+        if($con == null){
+            return mysqli_query($this->con,$query);
+        }else{
+            return mysqli_query($con,$query);
+        }
     }
 }
 ?>
