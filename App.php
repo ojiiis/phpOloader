@@ -62,7 +62,32 @@ HTACCESS
             }
         }
     }
+    static function randomString($length = 10, $type = 'alphanumeric') {
+    $characters = '';
 
+    switch (strtolower($type)) {
+        case 'numeric':
+            $characters = '0123456789';
+            break;
+        case 'alphabetic':
+            $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            break;
+        case 'alphanumeric':
+        default:
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            break;
+    }
+
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+
+    return $randomString;
+    }
+    
     public function setStatus($value) {
         $this->response["status"] = $value;
     }
