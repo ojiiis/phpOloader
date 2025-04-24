@@ -82,6 +82,9 @@ HTACCESS
     public function getResponse() {
         return $this->response;
     }
+    public function getConnection(){
+      return $this->con;
+    }
     public function runQuery($con = null, $query){
         if($con == null){
             return mysqli_query($this->con,$query);
