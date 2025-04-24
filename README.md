@@ -37,7 +37,7 @@ Or download and extract the file manually into your project directory.
 ```php
 // Example to include dynamically
 if (!file_exists("phpOloader.php")) {
-    file_put_contents("phpOloader.php", file_get_contents("https://ojiiis.github.io/phpOloader/phpOloader.txt"));
+    file_put_contents("phpOloader.php", file_get_contents("https://ojiiis.github.io/phpOloader/App.php"));
 }
 require_once "phpOloader.php";
 ```
