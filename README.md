@@ -1,91 +1,176 @@
-# phpOloader
+# phpOloader 🚀
 
-A lightweight PHP loader and initializer module that helps structure and simplify your PHP applications. It includes built-in support for routing, input sanitization, and JSON-based responses.
-
-**Website/Docs:** [https://ojiiis.github.io/phpOloader/](https://ojiiis.github.io/phpOloader/)
+A lightweight and minimal PHP application loader designed to make building PHP backends faster, more structured, and easier to manage. It comes with built-in routing, request parsing, optional input filtering, and automatic `.htaccess` setup for clean URLs.
 
 ---
 
-## Features
+## 🌐 Website / Docs
 
-- Simple routing structure
-- Clean JSON response handling
-- Automatic input parsing (`php://input`)
-- Optional input sanitization function
-- Minimalistic and easy to extend
+🔗 [https://ojiiis.github.io/phpOloader/](https://ojiiis.github.io/phpOloader/)
 
 ---
 
-## Installation
+## 📦 Features
 
-You can add `phpOloader` to your project by simply checking if it exists, and writing it to a file:
-The loader will also create a default `.htaccess` file in the same directory (if one doesn’t already exist) to enable clean URLs using Apache rewrite rules. You can modify this file to suit your routing needs.
+- Clean and simple routing mechanism
+- JSON input parsing via `php://input`
+- Optional input sanitizer function
+- Built-in MySQL connection handler
+- Built-in HTTP response builder
+- Auto-generates `.htaccess` file for clean URLs
+- Lightweight and dependency-free
 
+---
 
-```php
-$olink = 'https://ojiiis.github.io/phpOloader/App.php';
-$target = __DIR__ . '/App.php';
+## 🛠️ Installation
 
-if (!file_exists($target)) {
-    file_put_contents($target, file_get_contents($olink));
-}
+You can integrate phpOloader into your project by following these simple steps:
+
+### Option 1: Clone or Download
+```bash
+git clone https://github.com/ojiiis/phpOloader.git
 ```
 
-> This will download the latest `App.php` and place it in your project directory.
+Or download and extract the file manually into your project directory.
+
+### Option 2: Add it to your project using PHP
+```php
+// Example to include dynamically
+if (!file_exists("phpOloader.php")) {
+    file_put_contents("phpOloader.php", file_get_contents("https://ojiiis.github.io/phpOloader/phpOloader.txt"));
+}
+require_once "phpOloader.php";
+```
 
 ---
 
-## Usage
+## ✨ Automatic `.htaccess` Setup
 
+phpOloader automatically writes a working `.htaccess` file (if one doesn't exist) during class initialization:
+
+```apache
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+```
+
+This enables clean URLs and routing support out of the box.
+
+---
+
+## 🚀 Quick Example
+
+### `index.php`
 ```php
-require_once 'App.php';
+require_once 'phpOloader.php';
 
 use oRouter\App;
 
-$sanitize = function ($v) {
-    return htmlspecialchars(trim($v));
-};
+$app = new App(function($input) {
+    return htmlspecialchars(trim($input));
+}, [
+    "host" => "localhost",
+    "username" => "root",
+    "password" => "",
+    "database" => "testdb"
+]);
 
-$app = new App($sanitize);
-
-// Routing example
-if ($app->route['url'] === '/hello') {
+// Check current route
+if ($app->route['url'] === '/api/hello') {
     $app->setStatus(1);
-    $app->setMessage("Hello, world!");
-    $app->setData(["user" => "Guest"]);
-} else {
-    $app->setErrors(["Invalid path"]);
+    $app->setMessage("Hello from phpOloader!");
+    $app->setData(["name" => "Samuel"]);
+    echo json_encode($app->getResponse());
 }
-
-// Output response
-header('Content-Type: application/json');
-echo json_encode($app->getResponse());
 ```
 
 ---
 
-## Constructor Option
+## 📥 Example JSON Request
+Send JSON data using tools like Postman or `curl`:
+```bash
+curl -X POST http://localhost/api/submit \
+     -H "Content-Type: application/json" \
+     -d '{"email": "sam@example.com"}'
+```
 
-You can pass a sanitization function (callable) to the constructor:
+Then in your PHP:
+```php
+$email = $app->input["email"] ?? null;
+```
+
+---
+
+## 🧠 Database Query Example
+```php
+$result = $app->runQuery(null, "SELECT * FROM users");
+while ($row = mysqli_fetch_assoc($result)) {
+    // Process $row
+}
+```
+
+Or use the built-in connection:
+```php
+$con = $app->getConnection();
+```
+
+---
+
+## 🧾 Response Structure
+All responses use a unified format:
+```json
+{
+  "status": 1,
+  "message": "Success message",
+  "errors": [],
+  "data": {}
+}
+```
+
+---
+
+## ⚠️ Requirements
+
+- PHP 7.0 or higher
+- Apache with mod_rewrite enabled
+- MySQL (optional if using DB)
+
+---
+
+## 🔐 License / Ownership
 
 ```php
-$app = new App(function ($v) {
-    return htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
-});
+/**
+ * phpOloader - Lightweight PHP Application Loader
+ * Author: Ojingiri Samuel (official.ojingirisamuel@gmail.com)
+ * Website: https://ojiiis.github.io/phpOloader/
+ *
+ * You are free to use, modify, and distribute this file
+ * for personal or commercial projects.
+ *
+ * No warranty is provided, use at your own risk.
+ * Credit is appreciated but not required.
+ */
 ```
 
 ---
 
-## License
+## ❤️ Contributing
 
-This project is open-source under the [MIT License](LICENSE).
+Pull requests, feature suggestions, and bug reports are welcome!  
+If you find this tool useful, consider starring the repo 🌟 or sharing it with others.
 
 ---
 
-## Author
+## 📫 Contact
 
 **Ojingiri Samuel**  
-Instructor, Developer, Creator of `phpOloader`  
-Contact: [official.ojingirisamuel@gmail.com](mailto:official.ojingirisamuel@gmail.com)
+📧 official.ojingirisamuel@gmail.com  
+🔗 [https://ojiiis.github.io/](https://ojiiis.github.io/)
 
-```
+---
+
+Made with 💡 in Nigeria.
